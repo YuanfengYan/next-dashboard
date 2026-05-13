@@ -11,6 +11,9 @@ import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
+/**
+ * 获取所有收入数据
+ */
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
@@ -21,7 +24,7 @@ export async function fetchRevenue() {
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.',data);
 
     return data;
   } catch (error) {
@@ -30,6 +33,9 @@ export async function fetchRevenue() {
   }
 }
 
+/**
+ * 获取最新的5条发票记录，包括金额、客户名称和邮箱
+ */
 export async function fetchLatestInvoices() {
   try {
     const data = await sql<LatestInvoiceRaw[]>`
@@ -50,6 +56,9 @@ export async function fetchLatestInvoices() {
   }
 }
 
+/**
+ * 获取仪表板卡片所需的统计数据：客户总数、发票总数、已支付和待支付金额
+ */
 export async function fetchCardData() {
   try {
     // You can probably combine these into a single SQL query
@@ -86,6 +95,11 @@ export async function fetchCardData() {
 }
 
 const ITEMS_PER_PAGE = 6;
+/**
+ * 根据查询条件和分页获取过滤后的发票列表
+ * @param query - 搜索关键词
+ * @param currentPage - 当前页码
+ */
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
@@ -121,6 +135,10 @@ export async function fetchFilteredInvoices(
   }
 }
 
+/**
+ * 根据查询条件计算发票记录的总页数
+ * @param query - 搜索关键词
+ */
 export async function fetchInvoicesPages(query: string) {
   try {
     const data = await sql`SELECT COUNT(*)
@@ -142,6 +160,10 @@ export async function fetchInvoicesPages(query: string) {
   }
 }
 
+/**
+ * 根据发票ID获取单个发票的详细信息
+ * @param id - 发票ID
+ */
 export async function fetchInvoiceById(id: string) {
   try {
     const data = await sql<InvoiceForm[]>`
@@ -167,6 +189,9 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+/**
+ * 获取所有客户的ID和名称列表
+ */
 export async function fetchCustomers() {
   try {
     const customers = await sql<CustomerField[]>`
@@ -184,6 +209,10 @@ export async function fetchCustomers() {
   }
 }
 
+/**
+ * 根据查询条件获取过滤后的客户列表，包含客户信息和发票统计
+ * @param query - 搜索关键词
+ */
 export async function fetchFilteredCustomers(query: string) {
   try {
     const data = await sql<CustomersTableType[]>`
