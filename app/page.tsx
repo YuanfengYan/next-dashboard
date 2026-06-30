@@ -16,7 +16,7 @@ export default function Page() {
             <a href="https://nextjs.org/learn/" className="text-blue-900">
               Next.js Learn Course
             </a>
-            , brought to you by Vercel.严
+            , brought to you by Vercel.
           </p>
           <Link
             href="/login"
@@ -42,9 +42,7 @@ export default function Page() {
             className="hidden md:block"
             alt="Screenshots of the dashboard project showing mobile version"
           /> */}
-          <div
-              className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black"
-            />
+          
         </div>
       </div>
     </main>
