@@ -6,7 +6,7 @@ export const formatCurrency = (amount: number) => {
     currency: 'USD',
   });
 };
-
+// 格式化日期为本地格式
 export const formatDateToLocal = (
   dateStr: string,
   locale: string = 'en-US',
@@ -21,6 +21,7 @@ export const formatDateToLocal = (
   return formatter.format(date);
 };
 
+// 生成y轴标签和顶部标签
 export const generateYAxis = (revenue: Revenue[]) => {
   // Calculate what labels we need to display on the y-axis
   // based on highest record and in 1000s
@@ -35,6 +36,7 @@ export const generateYAxis = (revenue: Revenue[]) => {
   return { yAxisLabels, topLabel };
 };
 
+// 生成分页数组，用于分页组件
 export const generatePagination = (currentPage: number, totalPages: number) => {
   // If the total number of pages is 7 or less,
   // display all pages without any ellipsis.

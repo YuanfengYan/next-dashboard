@@ -12,9 +12,12 @@ const FormSchema = z.object({
     status: z.enum(["pending", "paid"]),
     date: z.string(),
 });
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateInvoice = FormSchema.omit({ id: true, date: true }); //创建发票时不需要id和date字段，因为它们会由数据库自动生成和设置。我们使用zod的omit方法来创建一个新的模式，排除掉id和date字段，这样在创建发票时就只需要提供customerId、amount和status字段了。
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+
+
 export async function createInvoice(formData: FormData) {
+   throw new Error("Failed to create invoice. Please check the input and try again.");
    try {
     const { customerId, amount, status } = CreateInvoice.parse({
         ...Object.fromEntries(formData.entries()),
@@ -27,7 +30,7 @@ export async function createInvoice(formData: FormData) {
       INSERT INTO invoices (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
-  } catch (error) {
+  } catch (error) { console.error(error);
     // We'll also log the error to the console for now
    
     throw new Error("Failed to create invoice. Please check the input and try again.");
